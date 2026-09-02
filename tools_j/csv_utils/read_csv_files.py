@@ -6,7 +6,7 @@ import glob
 from natsort import natsorted
 
 def read_metrics_data(file_path, encoding):
-    counts_list = glob.glob(file_path + '*.csv')
+    counts_list = glob.glob(file_path + '/*.csv')
     counts_list = natsorted(counts_list)
     # Get column order from the first file
     first_df = pd.read_csv(counts_list[0])
@@ -85,7 +85,7 @@ def load_npy_images(npys_path):
 
 if __name__ == "__main__":
 
-    # Read the CSV and return dataframe
+    # # Read the CSV and return dataframe
     csv_file_path = "/media/jenny/Expansion/MM_HE_results/HE_MM009_B_270125/2048x2048/mask_filled_nuclei/count_pixels/"
     read_metrics_data(csv_file_path, encoding="ISO-8859-1" )
     
