@@ -145,7 +145,6 @@ def process_directory(
 ):
     """
     Process all binary filled nuclei PNGs.
-
     Files are matched according to patch number.
 
     Example:
@@ -306,12 +305,9 @@ if __name__ == "__main__":
         # =========================================================
         # SETTINGS
         # =========================================================
-
-        # Your uploaded boundary image has a perfectly black
-        # background, so 0 is appropriate.
-        #
+        
         # Every pixel with ANY channel > 0 will be removed
-        # from the filled mask.
+        # from the filled mask
         boundary_threshold = 0
 
         # =========================================================
