@@ -1,6 +1,7 @@
 from pathlib import Path
 from PIL import Image
 import numpy as np
+import cv2
 
 def replace_black_pixels(base_path: Path, input_path: Path, output_path: Path):
     base_img = Image.open(base_path).convert("RGBA")
@@ -53,7 +54,7 @@ def create_nuclei_overlay(nuclei_mask_folder, HE_patches_folder, output_folder):
         except Exception as e:
             print(f"Error processing {base_path.name}: {e}")
 
-import cv2
+
 
 def create_nuclei_overlay_and_mid_region_marker(nuclei_mask_folder, HE_patches_folder, output_folder):
     print("start")
@@ -108,7 +109,8 @@ def create_nuclei_overlay_and_mid_region_marker(nuclei_mask_folder, HE_patches_f
 
 
 if __name__ == "__main__":
-    nuclei_mask_folder = Path("/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/correct_nuclei/Func044_ST_HE_40x_BF_01/overlay/")
-    HE_patches_folder = Path("/media/jenny/Expansion/HE_patches/40x/Func044_ST_HE_40x_BF_01/aughovernet/2048x2048/")
-    output_folder = Path("/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/correct_nuclei/Func044_ST_HE_40x_BF_01/post_process_overlay/")
+    sample = "044"
+    nuclei_mask_folder = Path(f"/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/correct_nuclei/Func{sample}_ST_HE_40x_BF_01/overlay/")
+    HE_patches_folder = Path(f"/media/jenny/Expansion/HE_patches/40x/Func{sample}_ST_HE_40x_BF_01/aughovernet/2048x2048/")
+    output_folder = Path(f"/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/correct_nuclei/Func{sample}_ST_HE_40x_BF_01/post_process_overlay/")
     create_nuclei_overlay(nuclei_mask_folder, HE_patches_folder, output_folder)
