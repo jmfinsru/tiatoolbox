@@ -433,7 +433,7 @@ if __name__ == "__main__":
 
     # Folder containing:
     #
-    # Func0..._black_mask.tif
+    # {sample}_ST_HE_20x_BF_01_black_mask.tif
     root_wsi_dir = Path(
         "/media/jenny/Expansion/HE/20x/masks/"
     )
