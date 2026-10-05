@@ -282,11 +282,14 @@ if __name__ == "__main__":
     # epithelial_patch_2.png
     # ...
     
-    types = ["connective", "eosinophil", "epithelial", "lymphocyte", "neutrophil", "plasma"]
+    # # Conic dataset
+    # types = ["connective", "eosinophil", "epithelial", "lymphocyte", "neutrophil", "plasma"]
+    # Pannuke dataset
+    types = ["neoplastic",	"inflammatory",	"connective",	"dead",	"epithelial"]
     
     for type in types:
         filled_nuclei_dir = (
-            f"/media/jenny/Expansion/jenny_funcprost/conic/results/correct_nuclei/with_only_binary_maps_from_saga/Func043_ST_HE_20x_BF_01_binary_only/overlay/binary_by_type/{type}/"
+            f"/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/new/Func116_ST_HE_40x_BF_01_only_binary/overlay/binary_by_type/{type}/"
         )
 
         # Example:
@@ -294,12 +297,12 @@ if __name__ == "__main__":
         # overlay_patch_2.png
         # ...
         boundary_dir = (
-            "/media/jenny/Expansion/jenny_funcprost/conic/results/correct_nuclei/Func043_ST_HE_20x_BF_01/overlay/"
+            "/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/new/Func116_ST_HE_40x_BF_01/overlay/"
         )
 
         # Processed masks will be saved here
         output_dir = (
-            f"/media/jenny/Expansion/jenny_funcprost/conic/results/correct_nuclei/Func043_ST_HE_20x_BF_01/binary_maps_separated_nuclei/{type}/"
+            f"/media/jenny/Expansion/jenny_funcprost/pannuke/results/zhang_original_weights/new/Func116_ST_HE_40x_BF_01/binary_maps_separated_nuclei/{type}/"
         )
 
         # =========================================================

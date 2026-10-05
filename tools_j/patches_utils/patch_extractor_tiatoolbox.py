@@ -10,12 +10,13 @@ import numpy as np
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
-# Get the path to the project root directory
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..")
+)
 
-# Append the project root to sys.path
-if project_root not in sys.path:
-    sys.path.append(project_root)
+sys.path.insert(0, project_root)
+
+print(project_root)
 
 from tiatoolbox.wsicore import WSIReader
 from tiatoolbox.tools.patchextraction import SlidingWindowPatchExtractor
@@ -257,15 +258,17 @@ def extract_patches_and_create_overview_image(image_path: str | Path, patch_save
     patch_save_path = Path(patch_save_path)
     patch_save_path.mkdir(parents=True, exist_ok=True)
 
+    image_name = image_path.stem
     try:
         img = tifffile.imread(image_path)
-        image_name = Path(image_path).stem
+
+    # Fall back to normal image formats: PNG, JPG, JPEG, BMP, etc.
     except Exception:
-        img = image_path
-        image_name = "image"
+        with Image.open(image_path) as im:
+            img = np.asarray(im)
 
     nr_extra_pixels = 0       # Extra pixels per patch
-    pixels = 4856              # Patch width/height before extra pixels
+    pixels = 1024              # Patch width/height before extra pixels
     nr_pixels_overlap = 0     # Overlap between neighboring patches
 
     patch_w = pixels + nr_extra_pixels
@@ -361,10 +364,11 @@ def extract_patches_and_create_overview_image(image_path: str | Path, patch_save
             stroke_width=2,
             stroke_fill=(255, 255, 255),
         )
-
-    overview_path = patch_save_path / f"overview_image/{image_name}_patch_overview.png"
-    if not overview_path.exists:
-        overview_path.mkdir(parents=True)
+    
+    overview_folder = patch_save_path / f"overview_image/"
+    if not overview_folder.exists():
+        overview_folder.mkdir(parents=True)
+    overview_path = overview_folder/f"{image_name}_patch_overview.png"
     overview_pil.save(overview_path)
     print(f"Saved overview image to: {overview_path}")
 
@@ -446,9 +450,9 @@ if __name__ == "__main__":
     # patch_save_path = "/media/jenny/Expansion/Prostata_Vilde/Analysis/Jenny/CD31/10x/patches/patches_Func015/patches_Func015_16_squares/"
     
     # patch_save_path = Path("/media/jenny/Expansion/MM_HE_patches/HE_MM179_B_70225_20x_BF_01/aughovernet/2048x2048/")
-    image_path = "/media/jenny/Expansion/HE_patches/20x/Func116_ST_HE_20x_BF_01/aughovernet/2048x2048/patch_24.png"
+    image_path = Path("/media/jenny/Expansion/Prostata_Vilde/PIN_trippel/JPEG/10x/Image_Func006_PIN_trippel/Image_Func006_PIN_trippel_Layer1-10x_BF_02.jpg")
     # patch_mask_save_path = Path("/media/jenny/Expansion/MM_HE_patches/HE_MM172_2B_290125_20x_BF_01/aughovernet/2048x2048_mask/")
-    patch_save_path = Path("/media/jenny/Expansion/test_nuclei/test3/patches_512x512/")
+    patch_save_path = Path("/media/jenny/Expansion/Prostata_Vilde/PIN_trippel/JPEG/10x/Image_Func006_PIN_trippel/patches/Image_Func006_PIN_trippel_Layer1-10x_BF_02/1024x1024/")
    
     # if not patch_mask_save_path.exists():
     #     patch_mask_save_path.mkdir(parents=True)
@@ -461,10 +465,10 @@ if __name__ == "__main__":
 
     # extract_patches_wsi(wsi_path, patch_save_path)
     # extract_patches(image_path, patch_mask_save_path)
-    extract_patches(image_path, patch_save_path)
+    # extract_patches(image_path, patch_save_path)
     
     # extract_patches_all_in_folder(root_dir= Path("/media/jenny/Expansion/MetoxyLacc_HE_20x_TIFF/"))
     # extract_patches_all_in_folder_mask(root_dir= Path("/media/jenny/Expansion/MetoxyLacc_HE_20x_masks/"))
 
-    # extract_patches_and_create_overview_image(image_path, patch_save_path)
+    extract_patches_and_create_overview_image(image_path, patch_save_path)
     # extract_patches_all_in_same_folder(root_dir= "/media/jenny/Expansion/funcprost_Visium/20x/images/second_group/")
